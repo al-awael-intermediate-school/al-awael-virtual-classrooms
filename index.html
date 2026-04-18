@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الفصول الافتراضية - منصة متوسطة وثانوية الأوائل</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+    <link rel="icon" type="image/png" href="https://i.postimg.cc/FH3FLXRR/abroad.png">
+    
+    <style>
+        /* إعدادات عامة */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2c3e50;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --success-color: #2ecc71;
+            --warning-color: #f39c12;
+        }
+
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        /* رأس الصفحة */
+        header {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+
+        .logo img {
+            height: 88px;
+            width: auto;
+            max-width: 100%;
+            display: block;
+            object-fit: contain;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        /* أيقونة الإشعارات */
+        .notification-icon {
+            position: relative;
+            font-size: 1.2rem;
+            color: var(--dark-color);
+            background: none;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .notification-count {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background-color: var(--accent-color);
+            color: white;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            font-size: 0.7rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* صورة المستخدم */
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #3b82f6, #2563eb);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .user-avatar:hover {
+            transform: scale(1.05);
+        }
+
+        /* قائمة التطبيقات المنسدلة */
+        .apps-dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .apps-btn {
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            color: var(--dark-color);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            padding: 8px 12px;
+            border-radius: 30px;
+            transition: background 0.3s;
+        }
+
+        .apps-btn:hover {
+            background-color: #f0f2f5;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            left: 0;
+            top: 45px;
+            background-color: white;
+            min-width: 210px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+            border-radius: 12px;
+            z-index: 1001;
+            overflow: hidden;
+            padding: 8px 0;
+        }
+
+        .dropdown-content.show-dropdown {
+            display: block;
+        }
+
+        .dropdown-content a {
+            color: #333;
+            padding: 12px 20px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: background 0.2s;
+            font-size: 0.9rem;
+        }
+
+        .dropdown-content a i {
+            width: 24px;
+            font-size: 1.1rem;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #f5f5f5;
+        }
+
+        /* زر الدعم الفني */
+        .support-btn {
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            color: var(--dark-color);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            padding: 8px 12px;
+            border-radius: 30px;
+            transition: background 0.3s;
+        }
+
+        .support-btn:hover {
+            background-color: #f0f2f5;
+        }
+
+        /* ========== مودال الحساب ========== */
+        .account-wrapper {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 2000;
+            display: none;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .account-skeleton {
+            width: 320px;
+            padding: 24px;
+            border-radius: 16px;
+            background-color: white;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .skeleton-circle {
+            width: 75px;
+            height: 75px;
+            border-radius: 50%;
+            margin: 0 auto 16px auto;
+            background-image: linear-gradient(90deg, #e0e0e0 0px, #f0f0f0 40px, #e0e0e0 80px);
+            background-size: 300%;
+            background-position: 100% 0;
+            animation: shimmer 1.5s infinite;
+        }
+
+        .skeleton-title {
+            height: 24px;
+            width: 70%;
+            margin: 0 auto 12px auto;
+            border-radius: 8px;
+            background-image: linear-gradient(90deg, #e0e0e0 0px, #f0f0f0 40px, #e0e0e0 80px);
+            background-size: 300%;
+            background-position: 100% 0;
+            animation: shimmer 1.5s infinite;
+        }
+
+        .skeleton-divider {
+            width: 50px;
+            height: 3px;
+            margin: 0 auto 16px auto;
+            border-radius: 3px;
+            background-image: linear-gradient(90deg, #e0e0e0 0px, #f0f0f0 40px, #e0e0e0 80px);
+            background-size: 300%;
+            background-position: 100% 0;
+            animation: shimmer 1.5s infinite;
+        }
+
+        .skeleton-text {
+            height: 40px;
+            width: 100%;
+            margin: 12px 0;
+            border-radius: 8px;
+            background-image: linear-gradient(90deg, #e0e0e0 0px, #f0f0f0 40px, #e0e0e0 80px);
+            background-size: 300%;
+            background-position: 100% 0;
+            animation: shimmer 1.5s infinite;
+        }
+
+        .skeleton-button {
+            height: 40px;
+            width: 100px;
+            margin: 20px auto 0 auto;
+            border-radius: 30px;
+            background-image: linear-gradient(90deg, #e0e0e0 0px, #f0f0f0 40px, #e0e0e0 80px);
+            background-size: 300%;
+            background-position: 100% 0;
+            animation: shimmer 1.5s infinite;
+        }
+
+        @keyframes shimmer {
+            to {
+                background-position: -100% 0;
+            }
+        }
+
+        .account-box {
+            border: 1px solid #e2e8f0;
+            padding: 24px;
+            width: 90%;
+            max-width: 320px;
+            border-radius: 16px;
+            background-color: #ffffff;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            margin: 0 auto;
+            text-align: center;
+            display: none;
+        }
+
+        .profile-circle {
+            width: 75px;
+            height: 75px;
+            background: linear-gradient(135deg, #3b82f6, #2563eb);
+            border-radius: 50%;
+            margin: 0 auto 16px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .profile-circle .material-symbols-outlined {
+            font-size: 50px;
+            color: white;
+        }
+
+        .account-box h3 {
+            margin: 0 0 8px 0;
+            color: #1e293b;
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        .account-box p {
+            color: #475569;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            margin: 12px 0 0 0;
+        }
+
+        .account-box a {
+            color: #3b82f6;
+            text-decoration: none;
+            font-weight: 500;
+            display: inline-block;
+            margin-top: 4px;
+        }
+
+        .account-box a:hover {
+            text-decoration: underline;
+        }
+
+        .divider {
+            width: 50px;
+            height: 3px;
+            background: #3b82f6;
+            margin: 8px auto 0 auto;
+            border-radius: 3px;
+        }
+
+        .close-account-btn {
+            background: #e2e8f0;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 30px;
+            margin-top: 20px;
+            cursor: pointer;
+            color: #475569;
+            font-size: 0.8rem;
+            transition: all 0.2s;
+        }
+
+        .close-account-btn:hover {
+            background: #cbd5e1;
+        }
+
+        /* مودال الإشعارات */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.6);
+            backdrop-filter: blur(4px);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: white;
+            border-radius: 24px;
+            width: 90%;
+            max-width: 400px;
+            padding: 30px 25px;
+            text-align: center;
+            box-shadow: 0 20px 35px rgba(0,0,0,0.3);
+            animation: fadeInUp 0.3s ease;
+            position: relative;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-logo {
+            margin-bottom: 20px;
+        }
+
+        .modal-logo img {
+            width: 100px;
+            height: auto;
+            display: inline-block;
+        }
+
+        .support-text {
+            font-size: 1rem;
+            color: #2c3e50;
+            line-height: 1.6;
+            margin: 20px 0 10px;
+        }
+
+        .outlook-link-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: #0072C6;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            margin: 15px 0 5px;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            width: auto;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .outlook-link-btn i {
+            font-size: 1.2rem;
+        }
+
+        .outlook-link-btn:hover {
+            background: #005a9e;
+            transform: scale(1.02);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .notification-note {
+            font-size: 0.85rem;
+            color: #7f8c8d;
+            margin-top: 15px;
+        }
+
+        .close-modal {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 10px 24px;
+            border-radius: 40px;
+            margin-top: 25px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background 0.3s;
+        }
+
+        .close-modal:hover {
+            background-color: #1e2b38;
+        }
+
+        /* مودال الدعم الفني */
+        .modal-support {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.6);
+            backdrop-filter: blur(4px);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-support-content {
+            background-color: white;
+            border-radius: 24px;
+            width: 90%;
+            max-width: 400px;
+            padding: 30px 25px;
+            text-align: center;
+            box-shadow: 0 20px 35px rgba(0,0,0,0.3);
+            animation: fadeInUp 0.3s ease;
+            position: relative;
+        }
+
+        .support-phone {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            direction: ltr;
+            display: inline-block;
+            margin-top: 8px;
+            background: #ecf9ff;
+            padding: 8px 16px;
+            border-radius: 50px;
+            letter-spacing: 1px;
+        }
+
+        /* شريط التنقل */
+        nav {
+            background-color: var(--secondary-color);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            flex-wrap: wrap;
+        }
+
+        .nav-links li {
+            padding: 15px 20px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .nav-links i {
+            margin-left: 8px;
+        }
+
+        .nav-links .active {
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--primary-color);
+        }
+
+        /* محتوى التنبيه الجديد */
+        .message-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 50px 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin: 40px 0;
+        }
+
+        .error-gif {
+            width: 290px;
+            height: auto;
+            margin-bottom: 20px;
+        }
+
+        .redirect-text {
+            color: var(--secondary-color);
+            font-size: 1.4rem;
+            font-weight: bold;
+        }
+
+        /* تذييل الصفحة */
+        footer {
+            background-color: white;
+            color: #333;
+            padding: 30px 0;
+            margin-top: 40px;
+            border-top: 1px solid #eee;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .copyright {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .footer-logo img {
+            height: 40px;
+            margin: 0 10px;
+        }
+
+        .made-by {
+            font-size: 0.9rem;
+            color: #777;
+        }
+
+        @media (max-width: 768px) {
+            .header-content, .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            .user-menu {
+                margin-top: 15px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            .footer-logo {
+                margin-top: 15px;
+            }
+            .error-gif {
+                width: 80%;
+            }
+            .logo img {
+                height: 70px;
+            }
+            .apps-btn span, .support-btn span {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <img src="https://i.postimg.cc/Zn51CfZ8/lqtt-shasht-2026-03-31-132111.png" alt="منصة متوسطة وثانوية الأوائل">
+                </div>
+                <div class="user-menu">
+                    <!-- أيقونة الإشعارات -->
+                    <div class="notification-icon" id="notificationBtn">
+                        <i class="fas fa-bell"></i>
+                        <span class="notification-count">1</span>
+                    </div>
+
+                    <!-- قائمة التطبيقات المنسدلة -->
+                    <div class="apps-dropdown">
+                        <button class="apps-btn" id="appsDropdownBtn">
+                            <i class="fas fa-th"></i>
+                            <span>التطبيقات</span>
+                        </button>
+                        <div class="dropdown-content" id="appsDropdownMenu">
+                            <a href="#" data-external="https://www.microsoft.com/ar/microsoft-365/powerpoint" class="external-link">
+                                <i class="fas fa-chalkboard"></i> PowerPoint
+                            </a>
+                            <a href="#" data-external="https://www.microsoft.com/ar/microsoft-365/word" class="external-link">
+                                <i class="fas fa-file-alt"></i> Word
+                            </a>
+                            <a href="#" data-external="https://www.microsoft.com/ar/microsoft-365/microsoft-excel" class="external-link">
+                                <i class="fas fa-table"></i> Excel
+                            </a>
+                            <a href="#" data-external="https://outlook.office.com/" class="external-link">
+                                <i class="fas fa-envelope"></i> Outlook
+                            </a>
+                            <a href="#" data-external="https://www.microsoft.com/ar/microsoft-teams/download-app" class="external-link">
+                                <i class="fas fa-users"></i> Teams
+                            </a>
+                            <a href="#" data-external="https://www.microsoft.com/ar/microsoft-365/" class="external-link">
+                                <i class="fab fa-microsoft"></i> Microsoft 365
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- زر الدعم الفني -->
+                    <button class="support-btn" id="supportBtn">
+                        <i class="fas fa-headset"></i>
+                        <span>الدعم الفني</span>
+                    </button>
+
+                    <!-- صورة المستخدم -->
+                    <div class="user-avatar" id="profileBtn">
+                        <i class="fas fa-user"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <nav>
+        <div class="container">
+            <ul class="nav-links">
+                <li><a href="#"><i class="fas fa-home"></i> الرئيسية</a></li>
+                <li><a href="#"><i class="fas fa-book"></i> المواد الدراسية</a></li>
+                <li><a href="#"><i class="fas fa-tasks"></i> الواجبات</a></li>
+                <li><a href="#"><i class="fas fa-calendar-alt"></i> التقويم</a></li>
+                <li><a href="#"><i class="fas fa-chart-bar"></i> التقارير</a></li>
+                <li><a href="#" class="active"><i class="fas fa-video"></i> الفصول الافتراضية</a></li>
+                <li><a href="#"><i class="fas fa-file-alt"></i> الاختبارات</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="message-container">
+            <img src="https://i.postimg.cc/Dwjn6TJT/not-found-banner-4ecc79aa.gif" alt="Error" class="error-gif">
+            <h3 class="redirect-text">الرجاء اذهب الى مايكروسوفت تيمز او منصة مدرستي لرؤية الحصص</h3>
+        </div>
+    </div>
+
+    <!-- مودال الحساب -->
+    <div id="accountWrapper" class="account-wrapper">
+        <div id="accountSkeleton" class="account-skeleton">
+            <div class="skeleton-circle"></div>
+            <div class="skeleton-title"></div>
+            <div class="skeleton-divider"></div>
+            <div class="skeleton-text"></div>
+            <div class="skeleton-button"></div>
+        </div>
+        <div id="accountBox" class="account-box">
+            <div class="profile-circle">
+                <span class="material-symbols-outlined">account_circle</span>
+            </div>
+            <h3>مستخدم لمنصة الأوائل</h3>
+            <div class="divider"></div>
+            <p>لرؤية تفاصيل الحساب يرجى الذهاب إلى 
+                <a href="https://schools.madrasati.sa" target="_blank">منصة مدرستي</a>
+            </p>
+            <button class="close-account-btn" id="closeAccountBtn">إغلاق</button>
+        </div>
+    </div>
+
+    <!-- مودال الإشعارات -->
+    <div id="notificationModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-logo">
+                <img src="https://i.postimg.cc/bJ4RsLjj/email-(2).png" alt="إشعارات">
+            </div>
+            <div class="support-text">
+                يرجى التحقق من بريدك الإلكتروني للحصول على آخر التحديثات.
+            </div>
+            <a href="https://outlook.live.com" target="_blank" rel="noopener noreferrer" class="outlook-link-btn">
+                <i class="fas fa-envelope"></i>
+                افتح بريدي الإلكتروني في Outlook
+            </a>
+            <div class="notification-note">
+                <i class="fas fa-external-link-alt"></i> سيتم فتح Outlook في علامة تبويب جديدة
+            </div>
+            <button class="close-modal" id="closeNotificationModalBtn">إغلاق</button>
+        </div>
+    </div>
+
+    <!-- مودال الدعم الفني -->
+    <div id="supportModal" class="modal-support">
+        <div class="modal-support-content">
+            <div class="modal-logo">
+                <img src="https://i.postimg.cc/Z0kPxqMN/email-(1).png" alt="الدعم الفني">
+            </div>
+            <div class="support-text">
+                للحصول على الدعم الفني، يرجى الاتصال بالرقم التالي:
+            </div>
+            <div class="support-phone" id="phoneNumber">
+                +966 59 167 4555
+            </div>
+            <button class="close-modal" id="closeModalBtn">إغلاق</button>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="copyright">
+                    <p>جميع الحقوق محفوظة &copy; 2025 منصة متوسطة وثانوية الأوائل</p>
+                </div>
+                <div class="footer-logo">
+                    <span class="made-by">صنع من:</span>
+                    <img src="https://i.postimg.cc/c15jr87F/swrh-restudio-nskht-(2).png" alt="شعار المنصة">
+                    <span>Education</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // ========== مودال الحساب ==========
+            const accountWrapper = document.getElementById('accountWrapper');
+            const accountSkeleton = document.getElementById('accountSkeleton');
+            const accountBox = document.getElementById('accountBox');
+            const profileBtn = document.getElementById('profileBtn');
+            
+            function openAccountModal() {
+                if (accountWrapper) {
+                    accountWrapper.style.display = 'flex';
+                    if (accountSkeleton) accountSkeleton.style.display = 'block';
+                    if (accountBox) accountBox.style.display = 'none';
+                    
+                    setTimeout(() => {
+                        if (accountSkeleton) accountSkeleton.style.display = 'none';
+                        if (accountBox) accountBox.style.display = 'block';
+                    }, 1000);
+                }
+            }
+            
+            function closeAccountModal() {
+                if (accountWrapper) {
+                    accountWrapper.style.display = 'none';
+                    setTimeout(() => {
+                        if (accountSkeleton) accountSkeleton.style.display = 'block';
+                        if (accountBox) accountBox.style.display = 'none';
+                    }, 300);
+                }
+            }
+            
+            if (profileBtn) {
+                profileBtn.addEventListener('click', openAccountModal);
+            }
+            
+            const closeAccountBtn = document.getElementById('closeAccountBtn');
+            if (closeAccountBtn) {
+                closeAccountBtn.addEventListener('click', closeAccountModal);
+            }
+            
+            if (accountWrapper) {
+                accountWrapper.addEventListener('click', function(e) {
+                    if (e.target === accountWrapper) {
+                        closeAccountModal();
+                    }
+                });
+            }
+            
+            // ========== مودال الإشعارات ==========
+            const notificationBtn = document.getElementById('notificationBtn');
+            const notificationModal = document.getElementById('notificationModal');
+            const closeNotificationModalBtn = document.getElementById('closeNotificationModalBtn');
+            
+            function openNotificationModal() {
+                if (notificationModal) notificationModal.style.display = 'flex';
+            }
+            
+            function closeNotificationModal() {
+                if (notificationModal) notificationModal.style.display = 'none';
+            }
+            
+            if (notificationBtn) {
+                notificationBtn.addEventListener('click', openNotificationModal);
+            }
+            
+            if (closeNotificationModalBtn) {
+                closeNotificationModalBtn.addEventListener('click', closeNotificationModal);
+            }
+            
+            if (notificationModal) {
+                notificationModal.addEventListener('click', function(e) {
+                    if (e.target === notificationModal) {
+                        closeNotificationModal();
+                    }
+                });
+            }
+            
+            // ========== قائمة التطبيقات المنسدلة ==========
+            const appsBtn = document.getElementById('appsDropdownBtn');
+            const dropdownMenu = document.getElementById('appsDropdownMenu');
+            
+            if (appsBtn && dropdownMenu) {
+                appsBtn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    dropdownMenu.classList.toggle('show-dropdown');
+                });
+                
+                window.addEventListener('click', function(e) {
+                    if (!appsBtn.contains(e.target) && !dropdownMenu.contains(e.target)) {
+                        dropdownMenu.classList.remove('show-dropdown');
+                    }
+                });
+                
+                dropdownMenu.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                });
+            }
+            
+            // ========== مودال الدعم الفني ==========
+            const supportBtn = document.getElementById('supportBtn');
+            const supportModal = document.getElementById('supportModal');
+            const closeModalBtnSupport = document.getElementById('closeModalBtn');
+            const phoneNumber = document.getElementById('phoneNumber');
+
+            function openSupportModal() {
+                if (supportModal) supportModal.style.display = 'flex';
+            }
+
+            function closeSupportModal() {
+                if (supportModal) supportModal.style.display = 'none';
+            }
+
+
+            if (supportBtn) {
+                supportBtn.addEventListener('click', openSupportModal);
+            }
+
+            if (closeModalBtnSupport) {
+                closeModalBtnSupport.addEventListener('click', closeSupportModal);
+            }
+
+            if (supportModal) {
+                supportModal.addEventListener('click', function(e) {
+                    if (e.target === supportModal) {
+                        closeSupportModal();
+                    }
+                });
+            }
+            
+            // ========== إغلاق جميع المودالات بالضغط على ESC ==========
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    if (supportModal && supportModal.style.display === 'flex') closeSupportModal();
+                    if (notificationModal && notificationModal.style.display === 'flex') closeNotificationModal();
+                    if (accountWrapper && accountWrapper.style.display === 'flex') closeAccountModal();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
